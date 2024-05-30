@@ -7,11 +7,15 @@ namespace EmployeeAPI.Tests
 {
     public class EmployeeServiceTests
     {
+        public EmployeeServiceTests()
+        {
+            MockData.LoadMockData();
+        }
+
         [Fact]
         public void SearchEmployeesByName_ReturnsCorrectEmployees()
         {
             // Arrange
-            MockData.LoadMockData();
             var service = new EmployeeService();
 
             // Act
@@ -26,7 +30,6 @@ namespace EmployeeAPI.Tests
         public void AddEmployee_IncreasesEmployeeCount()
         {
             // Arrange
-            MockData.LoadMockData();
             var service = new EmployeeService();
             var initialCount = service.SearchEmployeesByName("").Count();
 
