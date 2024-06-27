@@ -28,6 +28,12 @@ namespace EmployeeAPI.Controllers
             var employees = _employeeService.SearchEmployeesByName(name);
             return Ok(employees);
         }
+        [HttpGet("")]
+        public ActionResult<IEnumerable<Employee>> GetAll()
+        {
+            var employees = _employeeService.GetAllEmployees();
+            return Ok(employees);
+        }
 
         [HttpPost("AddEmployee")]
         public ActionResult<Employee> AddEmployee([FromBody] Employee employee)

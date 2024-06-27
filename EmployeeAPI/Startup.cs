@@ -25,8 +25,18 @@ namespace EmployeeAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
             services.AddControllers();
-             services.AddControllers();
+            services.AddControllers();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -34,11 +44,11 @@ namespace EmployeeAPI
                     Version = "v1",
                     Title = "Employees API",
                     Description = "Employees API by Pablo Luis Sangueza"
-                    
+
                 });
             });
 
-            services.AddTransient<IEmployeeService,EmployeeService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
             MockData.LoadMockData();
         }
 
@@ -49,7 +59,7 @@ namespace EmployeeAPI
                 app.UseDeveloperExceptionPage();
             }
 
-             var swaggerOptions = new SwaggerOptions();
+            var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
 
             app.UseSwagger();
@@ -60,6 +70,7 @@ namespace EmployeeAPI
             });
 
             app.UseRouting();
+            app.UseCors("AllowAllOrigins");
 
             app.UseEndpoints(endpoints =>
             {

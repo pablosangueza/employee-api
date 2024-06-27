@@ -9,6 +9,7 @@ namespace EmployeeAPI.Services
         IEnumerable<Employee> SearchEmployeesByName(string name);
         Employee AddEmployee(Employee employee);
         void RemoveEmployee(int id);
+        IEnumerable<Employee> GetAllEmployees();
     }
 
     public class EmployeeService : IEmployeeService
@@ -37,6 +38,11 @@ namespace EmployeeAPI.Services
             var employeeToRemove = _employees.FirstOrDefault(e => e.Id == id);
             if (employeeToRemove != null)
                 _employees.Remove(employeeToRemove);
+        }
+
+        public IEnumerable<Employee> GetAllEmployees()
+        {
+           return _employees.ToList();
         }
     }
 }
